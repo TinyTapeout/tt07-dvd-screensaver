@@ -20,9 +20,9 @@ module tt_um_tinytapeout_dvd_screensaver (
   // VGA signals
   wire hsync;
   wire vsync;
-  wire [1:0] R;
-  wire [1:0] G;
-  wire [1:0] B;
+  reg [1:0] R;
+  reg [1:0] G;
+  reg [1:0] B;
   wire video_active;
   wire [9:0] pix_x;
   wire [9:0] pix_y;
@@ -66,10 +66,25 @@ module tt_um_tinytapeout_dvd_screensaver (
       .pixel(pixel_value)
   );
 
-  assign R = video_active && logo_pixels ? {2{pixel_value}} : 2'b00;
-  assign G = video_active && logo_pixels ? {2{pixel_value}} : 2'b00;
-  assign B = video_active && logo_pixels ? {2{pixel_value}} : 2'b00;
+  // RGB output logic
+  always @(posedge clk) begin
+    if (~rst_n) begin
+      R <= 0;
+      G <= 0;
+      B <= 0;
+    end else begin
+      R <= 0;
+      G <= 0;
+      B <= 0;
+      if (video_active && logo_pixels) begin
+        R <= {2{pixel_value}};
+        G <= {2{pixel_value}};
+        B <= {2{pixel_value}};
+      end
+    end
+  end
 
+  // Bouncing logic
   always @(posedge clk) begin
     if (~rst_n) begin
       cx <= 200;
