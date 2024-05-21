@@ -31,6 +31,9 @@ module tt_um_tinytapeout_dvd_screensaver (
   wire [9:0] pix_x;
   wire [9:0] pix_y;
 
+  // Configuration
+  wire cfg_tile = ui_in[0];
+
   // TinyVGA PMOD
   assign uo_out  = {hsync, B[0], G[0], R[0], vsync, B[1], G[1], R[1]};
 
@@ -39,7 +42,7 @@ module tt_um_tinytapeout_dvd_screensaver (
   assign uio_oe  = 0;
 
   // Suppress unused signals warning
-  wire _unused_ok = &{ena, ui_in, uio_in};
+  wire _unused_ok = &{ena, ui_in[7:1], uio_in};
 
   reg [9:0] prev_y;
 
@@ -62,7 +65,7 @@ module tt_um_tinytapeout_dvd_screensaver (
 
   wire [9:0] x = pix_x - logo_left;
   wire [9:0] y = pix_y - logo_top;
-  wire logo_pixels = x[9:7] == 0 && y[9:7] == 0;
+  wire logo_pixels = cfg_tile || (x[9:7] == 0 && y[9:7] == 0);
 
   bitmap_rom rom1 (
       .x(x[6:0]),
