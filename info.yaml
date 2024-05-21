@@ -1,9 +1,9 @@
 # Tiny Tapeout project information
 project:
-  title:        "VGA DVD Screensaver with Tiny Tapeout Logo"      # Project title
+  title:        "DVD Screensaver with Tiny Tapeout Logo (Tiny VGA)"      # Project title
   author:       "Uri Shaked"      # Your name
   discord:      "urish"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "Tiny Tapeout Logo bouncing around the screen"      # One line description of what your project does
+  description:  "Tiny Tapeout Logo bouncing around the screen (640x480 VGA)"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     25175000       # Clock frequency in Hz (or 0 if not applicable)
 
