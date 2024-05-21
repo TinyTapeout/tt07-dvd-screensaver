@@ -6,6 +6,10 @@
 
 `default_nettype none
 
+parameter LOGO_SIZE = 128;  // Size of the logo in pixels
+parameter DISPLAY_WIDTH = 640;  // VGA display width
+parameter DISPLAY_HEIGHT = 480;  // VGA display height
+
 module tt_um_tinytapeout_dvd_screensaver (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
@@ -49,16 +53,16 @@ module tt_um_tinytapeout_dvd_screensaver (
       .vpos(pix_y)
   );
 
-  reg [9:0] cx;
-  reg [9:0] cy;
-  reg cx_dir;
-  reg cy_dir;
+  reg [9:0] logo_left;
+  reg [9:0] logo_top;
+  reg dir_x;
+  reg dir_y;
 
   wire pixel_value;
 
-  wire [9:0] x = pix_x - cx;
-  wire [9:0] y = pix_y - cy;
-  wire logo_pixels = &{x[9:7], y[9:7]};
+  wire [9:0] x = pix_x - logo_left;
+  wire [9:0] y = pix_y - logo_top;
+  wire logo_pixels = x[9:7] == 0 && y[9:7] == 0;
 
   bitmap_rom rom1 (
       .x(x[6:0]),
@@ -87,26 +91,26 @@ module tt_um_tinytapeout_dvd_screensaver (
   // Bouncing logic
   always @(posedge clk) begin
     if (~rst_n) begin
-      cx <= 200;
-      cy <= 200;
-      cy_dir <= 0;
-      cx_dir <= 1;
+      logo_left <= 200;
+      logo_top <= 200;
+      dir_y <= 0;
+      dir_x <= 1;
     end else begin
       prev_y <= pix_y;
       if (pix_y == 0 && prev_y != pix_y) begin
-        cy <= cy + (cy_dir ? 1 : -1);
-        cx <= cx + (cx_dir ? 1 : -1);
-        if (cx - 1 == 128) begin
-          cx_dir <= 1;
+        logo_left <= logo_left + (dir_x ? 1 : -1);
+        logo_top <= logo_top + (dir_y ? 1 : -1);
+        if (logo_left - 1 == 0) begin
+          dir_x <= 1;
         end
-        if (cy + 1 == 640 - 128) begin
-          cx_dir <= 0;
+        if (logo_left + 1 == DISPLAY_WIDTH - LOGO_SIZE) begin
+          dir_x <= 0;
         end
-        if (cy - 1 == 128) begin
-          cy_dir <= 1;
+        if (logo_top - 1 == 0) begin
+          dir_y <= 1;
         end
-        if (cy + 1 == 480 - 128) begin
-          cy_dir <= 0;
+        if (logo_top + 1 == DISPLAY_HEIGHT - LOGO_SIZE) begin
+          dir_y <= 0;
         end
       end
     end
