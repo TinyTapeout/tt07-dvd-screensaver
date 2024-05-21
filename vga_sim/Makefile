@@ -3,7 +3,7 @@
 # Author: Uri Shaked
 
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = tt_um_tinytapeout_dvd_screensaver.v bitmap_rom.v vga_sync_generator.v
+PROJECT_SOURCES = tt_um_tinytapeout_dvd_screensaver.v bitmap_rom.v vga_sync_generator.v palette.v
 TOP_MODULE = tt_um_tinytapeout_dvd_screensaver
 
 VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))

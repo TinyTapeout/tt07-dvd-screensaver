@@ -18,12 +18,13 @@ project:
     - "tt_um_tinytapeout_dvd_screensaver.v"
     - "bitmap_rom.v"
     - "vga_sync_generator.v"
+    - "palette.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
   ui[0]: "tile"
-  ui[1]: ""
+  ui[1]: "color"
   ui[2]: ""
   ui[3]: ""
   ui[4]: ""

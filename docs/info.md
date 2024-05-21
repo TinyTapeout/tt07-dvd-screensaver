@@ -13,7 +13,9 @@ Displays a bouncing Tiny Tapeout logo on the screen.
 
 ## How to test
 
-Connect to a VGA monitor. Set `tile` (ui_in[0]) to 1 to repeat the logo and tile it across the screen, or set it to 0 to display the logo once.
+Connect to a VGA monitor. Set the following inputs to configure the design:
+- `tile` (ui_in[0]) to repeat the logo and tile it across the screen,
+- `color` (ui_in[1]) to enable color output.
 
 ## External hardware
 
